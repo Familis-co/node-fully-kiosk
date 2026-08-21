@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+.DS_Store
+Thumbs.db
+
+.env
+.env.*
+!.env.example
+
+.eslintcache
+.turbo/
+.vscode/*
+!.vscode/extensions.json
+.idea/

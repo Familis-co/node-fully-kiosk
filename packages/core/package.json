@@ -1,0 +1,109 @@
+{
+  "name": "@familis/node-fully-kiosk",
+  "version": "0.1.0",
+  "description": "Typed Node.js, browser and React SDK for the Fully Kiosk Browser REST API and JavaScript interface",
+  "keywords": [
+    "fully-kiosk",
+    "fully",
+    "kiosk",
+    "android",
+    "tablet",
+    "rest",
+    "remote-admin",
+    "sdk",
+    "typescript",
+    "react",
+    "hooks",
+    "home-automation",
+    "digital-signage"
+  ],
+  "homepage": "https://github.com/familis/node-fully-kiosk#readme",
+  "bugs": "https://github.com/familis/node-fully-kiosk/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/familis/node-fully-kiosk.git",
+    "directory": "packages/core"
+  },
+  "license": "MIT",
+  "author": "Familis",
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "require": {
+        "types": "./dist/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    },
+    "./js": {
+      "import": {
+        "types": "./dist/js.d.ts",
+        "default": "./dist/js.js"
+      },
+      "require": {
+        "types": "./dist/js.d.cts",
+        "default": "./dist/js.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist coverage .tsbuildinfo",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "happy-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

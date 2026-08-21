@@ -1,0 +1,54 @@
+{
+  "name": "@familis/node-fully-kiosk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Fully Kiosk Browser TypeScript SDK and its React bindings",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/*\" run build",
+    "dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
+    "test": "pnpm -r --filter \"./packages/*\" run test",
+    "test:watch": "pnpm -r --parallel --filter \"./packages/*\" run test:watch",
+    "test:coverage": "pnpm -r --filter \"./packages/*\" run test:coverage",
+    "typecheck": "pnpm -r --filter \"./packages/*\" run typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "pnpm -r --filter \"./packages/*\" run clean && rm -rf node_modules",
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "release": "pnpm build && changeset publish",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.0",
+    "@eslint/js": "^9.36.0",
+    "@types/node": "catalog:",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.0",
+    "eslint-plugin-react-hooks": "^6.1.0",
+    "globals": "^16.4.0",
+    "lefthook": "^1.13.0",
+    "lint-staged": "^16.2.0",
+    "prettier": "^3.6.0",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.45.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

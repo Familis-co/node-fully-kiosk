@@ -1,0 +1,24 @@
+# Git hooks. Run `pnpm install` once and lefthook wires these up automatically
+# through the root `prepare` script.
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lint-staged
+      run: pnpm exec lint-staged --concurrent false
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: typecheck
+      run: pnpm run typecheck
+    - name: test
+      run: pnpm run test
+
+commit-msg:
+  jobs:
+    - name: conventional-commit
+      run: |
+        head -n1 {1} | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9/_-]+\))?!?: .{1,}' \
+          || { echo "Commit message must follow Conventional Commits, e.g. 'feat(core): add screenOn command'"; exit 1; }
