@@ -47,7 +47,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Open a release pull request or publish
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
           # Builds, then publishes: see the `release` script.
           version: pnpm run version-packages
