@@ -1,6 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    // tsup's dts step hands rollup-plugin-dts `baseUrl: compilerOptions.baseUrl || "."`,
+    // and TypeScript 6 rejects the option outright (TS5101). tsup exposes no way
+    // to turn that off, so silence it here until tsup stops setting it.
+    "ignoreDeprecations": "6.0",
     "target": "ES2022",
     "lib": ["ES2022"],
     "module": "ESNext",
