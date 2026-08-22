@@ -6,15 +6,26 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     groups:
-      dev-dependencies:
-        dependency-type: development
+      # One pull request for the whole toolchain. Every dependency here is a dev
+      # dependency of the same build, and a separate pull request per package
+      # rewrites pnpm-lock.yaml, so they all conflict with each other the moment
+      # one of them lands.
+      dependencies:
+        patterns: ['*']
     commit-message:
       prefix: chore
       include: scope
 
   - package-ecosystem: github-actions
-    directory: /
+    # A bare "/" only scans .github/workflows, which would leave the versions
+    # pinned inside the composite action unwatched.
+    directories:
+      - /
+      - /.github/actions/*
     schedule:
       interval: weekly
+    groups:
+      github-actions:
+        patterns: ['*']
     commit-message:
       prefix: ci

@@ -11,33 +11,38 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  LEFTHOOK: '0'
-
 jobs:
+  # Nothing is versioned or published from a commit that does not pass the same
+  # checks a pull request has to pass.
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
   release:
     name: Version or publish
+    needs: ci
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       # Required so the registry can attach a provenance statement to the tarball.
       id-token: write
+    env:
+      LEFTHOOK: '0'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
+          # Changesets compares against the full history to decide what to release.
           fetch-depth: 0
+          # A personal access token lifts two limits on GITHUB_TOKEN: an
+          # organisation can forbid Actions from opening pull requests, and a
+          # push made with GITHUB_TOKEN never triggers another workflow. The
+          # fallback keeps the job working without the secret.
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v7
+      - uses: ./.github/actions/setup
         with:
-          node-version: 22
-          cache: pnpm
           registry-url: https://registry.npmjs.org
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
 
       - name: Authenticate with npm
         # pnpm 11 no longer trusts auth settings in a repository .npmrc, so the
@@ -47,15 +52,22 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Open a release pull request or publish
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          # Builds, then publishes: see the `release` script.
-          version: pnpm run version-packages
-          publish: pnpm run release
-          commit: 'chore(release): version packages'
-          title: 'chore(release): version packages'
+          # v2 renamed every input this step uses: `version`, `publish`,
+          # `commit` and `title` no longer exist under those names.
+          version-script: pnpm run version-packages
+          publish-script: pnpm run release
+          commit-message: 'chore(release): version packages'
+          pr-title: 'chore(release): version packages'
+          # v2 stopped reading a token from the environment; the action now
+          # takes one only through this input.
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Still needed despite the input above, and by a different consumer:
+          # `changeset version` runs @changesets/changelog-github, which reads
+          # GITHUB_TOKEN itself and throws outright when it is missing.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Changesets shells out to `pnpm publish` and never passes
           # --provenance, so the flag is supplied as configuration instead.

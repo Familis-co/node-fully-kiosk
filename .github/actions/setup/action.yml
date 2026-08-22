@@ -1,0 +1,32 @@
+name: Set up the workspace
+description: Install pnpm and Node, then install the workspace dependencies from the lockfile.
+
+inputs:
+  node-version:
+    description: Node version to install. Defaults to the version pinned in .nvmrc.
+    required: false
+    default: ''
+  registry-url:
+    description: Registry to write into the generated npm config. Only the publishing job needs it.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    # Must precede setup-node: its `cache: pnpm` needs a pnpm binary on PATH to
+    # locate the store.
+    - uses: pnpm/action-setup@v6
+
+    - uses: actions/setup-node@v7
+      with:
+        # setup-node falls back to the file when the explicit version is empty,
+        # so the test matrix can override .nvmrc without a second action call.
+        node-version: ${{ inputs.node-version }}
+        node-version-file: .nvmrc
+        registry-url: ${{ inputs.registry-url }}
+        cache: pnpm
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

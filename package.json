@@ -1,5 +1,5 @@
 {
-  "name": "@familis/node-fully-kiosk",
+  "name": "node-fully-kiosk-monorepo",
   "version": "0.0.0",
   "private": true,
   "description": "Fully Kiosk Browser TypeScript SDK and its React bindings",
