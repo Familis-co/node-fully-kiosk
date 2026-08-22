@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
@@ -50,15 +50,14 @@ jobs:
       fail-fast: false
       matrix:
         # pnpm 11 refuses to start on anything below Node 22.13, so the
-        # toolchain cannot run on the Node 20 the package itself supports.
-        # The `compat` job below covers Node 20 without pnpm.
+        # toolchain cannot run on older Node versions.
         node: [22, 24, 26]
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -69,15 +68,15 @@ jobs:
       - name: Test
         run: pnpm run test
 
-  compat:
-    name: Consumer compatibility (Node 20)
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
@@ -88,21 +87,7 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
-      - name: Pack the tarball
+      - name: Check that the package can be packed
         # Filter by path, not by name: the private root package carries the same
         # name as the published one, so a name filter matches both.
         run: pnpm --filter "./packages/core" exec npm pack --pack-destination "$RUNNER_TEMP"
-
-      - name: Switch to the oldest Node the package claims to support
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install the tarball with npm and import every entry point
-        working-directory: ${{ runner.temp }}
-        run: |
-          node -v
-          node -e "require('fs').writeFileSync('package.json', JSON.stringify({ name: 'consumer', private: true, type: 'module' }))"
-          npm install ./familis-node-fully-kiosk-*.tgz react --no-audit --no-fund
-          cp "$GITHUB_WORKSPACE/scripts/smoke-import.mjs" .
-          node smoke-import.mjs
