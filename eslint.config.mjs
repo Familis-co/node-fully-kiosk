@@ -63,6 +63,14 @@ export default tseslint.config(
   },
 
   {
+    // Repository scripts are CLIs: stdout is their output, not a stray log.
+    files: ['scripts/**/*.{js,mjs}'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  {
     files: ['**/*.test.{ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',

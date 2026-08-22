@@ -4,5 +4,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["*.ts", "*.mts", "*.mjs", "*.js"]
+  "include": ["*.ts", "*.mts", "*.mjs", "*.js", "scripts/**/*.mjs"]
 }
