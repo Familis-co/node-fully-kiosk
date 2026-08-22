@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "familis/node-fully-kiosk" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "familis-co/node-fully-kiosk" }],
   "commit": false,
   "fixed": [],
   "linked": [],
