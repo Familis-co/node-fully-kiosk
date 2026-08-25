@@ -1,11 +1,5 @@
 # Contributor Covenant Code of Conduct
 
-<!--
-TODO: replace CONTACT_ADDRESS_TODO below with the address reports should reach.
-It must be private, monitored, and readable by the people who will act on a report.
-Until it is set, the enforcement section of this document does not work.
--->
-
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, color, religion, or sexual identity and orientation.
@@ -42,7 +36,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at CONTACT_ADDRESS_TODO. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at [theo.goens@familis.care](mailto:theo.goens@familis.care). All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 
