@@ -2,6 +2,8 @@
 
 Thanks for helping out. This repository is a pnpm workspace holding the `@familis/node-fully-kiosk` package, which publishes three entry points: the REST client, `/react` and `/js`.
 
+Taking part means following the [Code of Conduct](.github/CODE_OF_CONDUCT.md). Found a vulnerability? Do not open an issue — the [security policy](.github/SECURITY.md) explains how to report it privately.
+
 ## Getting set up
 
 ```bash
@@ -70,6 +72,17 @@ When the pull request lands on `main`, the release workflow opens a version pull
 - New events go into `FULLY_EVENTS` in `packages/core/src/js-interface/events.ts`. Payload types are derived from the placeholder list, so adding the entry is enough.
 - Every exported function, method and hook carries TSDoc covering each parameter.
 
+## Opening an issue
+
+Issues go through a form, so pick the one that fits:
+
+- **Bug report** — the SDK does not behave the way it is documented. The form asks for the entry point, a reproduction and the versions involved.
+- **Feature request** — a REST command, hook or `fully` binding the SDK does not cover yet. Linking the upstream Fully Kiosk documentation is usually enough.
+
+Questions about how to use the SDK belong in [Discussions](https://github.com/Familis-co/node-fully-kiosk/discussions), and problems with the app itself belong with [Fully Kiosk support](https://www.fully-kiosk.com/en/#contact).
+
 ## Writing a pull request
+
+Opening one fills in the [pull request template](.github/PULL_REQUEST_TEMPLATE.md). Work through it rather than deleting it.
 
 Describe _why_ the change is needed, not only what it does. If it changes behaviour on a device, say which Fully Kiosk version and which Android version you tested against.

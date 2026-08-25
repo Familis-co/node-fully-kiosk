@@ -1,0 +1,89 @@
+name: Bug report
+description: Something in the SDK does not behave the way it is documented
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please check the [open issues](https://github.com/Familis-co/node-fully-kiosk/issues) first — someone may already have hit this.
+
+        If the problem is Fully Kiosk itself rather than this SDK, the [Fully Kiosk support channels](https://www.fully-kiosk.com/en/#contact) are the better place.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Entry point
+      description: Which import is affected?
+      options:
+        - '@familis/node-fully-kiosk (REST client)'
+        - '@familis/node-fully-kiosk/react (React hooks)'
+        - '@familis/node-fully-kiosk/js (JavaScript interface)'
+        - Types only
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what you got instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The smallest snippet that shows the problem. Redact device addresses and passwords.
+      render: ts
+    validations:
+      required: true
+
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+      description: The version of `@familis/node-fully-kiosk` you are on.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Node version, or the browser and framework the code runs in.
+      placeholder: Node 22.13.0 / Chrome 141 with Next.js 15
+    validations:
+      required: true
+
+  - type: input
+    id: fully-version
+    attributes:
+      label: Fully Kiosk version
+      description: Shown under Settings → Other Settings → About. Leave blank if no device is involved.
+      placeholder: '1.60.1'
+
+  - type: input
+    id: android-version
+    attributes:
+      label: Android version and device
+      description: Leave blank if no device is involved.
+      placeholder: Android 13, Lenovo Tab M10
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Errors, stack traces or the raw device response. Redact anything sensitive.
+      render: shell
+
+  - type: checkboxes
+    id: plus
+    attributes:
+      label: Prerequisites
+      options:
+        - label: Fully Kiosk PLUS is licensed on the device (both surfaces are PLUS features)
+        - label: Remote Administration is enabled, for REST issues
+        - label: Advanced Web Settings → Enable JavaScript Interface is on, for `fully` object issues

@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a command, a hook or a binding the SDK does not cover yet
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The SDK tracks the [Fully Kiosk documentation](https://www.fully-kiosk.com/en/#websiteintegration). If you are asking for a REST command or a `fully` function that already exists upstream, linking to it is usually enough to get it added.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Entry point
+      options:
+        - '@familis/node-fully-kiosk (REST client)'
+        - '@familis/node-fully-kiosk/react (React hooks)'
+        - '@familis/node-fully-kiosk/js (JavaScript interface)'
+        - Across several entry points
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that the SDK makes hard or impossible today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API
+      description: How it would look at the call site. A rough sketch is fine.
+      render: ts
+
+  - type: input
+    id: upstream
+    attributes:
+      label: Upstream documentation
+      description: Link to the Fully Kiosk docs for the command, function or event, if one exists.
+      placeholder: https://www.fully-kiosk.com/en/#rest
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you are using now, and why they fall short.
