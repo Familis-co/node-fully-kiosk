@@ -28,5 +28,5 @@ This policy covers the SDK's own code: how it builds requests, handles credentia
 
 Two things sit outside it:
 
-- **Fully Kiosk Browser itself.** Report those to [Fully Kiosk support](https://www.fully-kiosk.com/en/#support).
+- **Fully Kiosk Browser itself.** Report those to [Fully Kiosk support](https://www.fully-kiosk.com/en/#contact).
 - **The Remote Admin protocol's design.** The API authenticates by taking the admin password as a `password` query parameter, and the SDK cannot change that. It defaults to `http` on port 2323, so pass `protocol: 'https'` where the device supports it, keep the device network off the open internet, and use `redactUrl` before logging a request URL.

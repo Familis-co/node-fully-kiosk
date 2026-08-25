@@ -7,7 +7,7 @@ body:
       value: |
         Thanks for the report. Please check the [open issues](https://github.com/Familis-co/node-fully-kiosk/issues) first — someone may already have hit this.
 
-        If the problem is Fully Kiosk itself rather than this SDK, the [Fully Kiosk support channels](https://www.fully-kiosk.com/en/#support) are the better place.
+        If the problem is Fully Kiosk itself rather than this SDK, the [Fully Kiosk support channels](https://www.fully-kiosk.com/en/#contact) are the better place.
 
   - type: dropdown
     id: surface

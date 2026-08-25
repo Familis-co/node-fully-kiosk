@@ -4,7 +4,7 @@ contact_links:
     url: https://github.com/Familis-co/node-fully-kiosk/discussions
     about: Ask how to do something with the SDK, rather than opening a bug report.
   - name: Fully Kiosk Browser support
-    url: https://www.fully-kiosk.com/en/#support
+    url: https://www.fully-kiosk.com/en/#contact
     about: For problems with the app itself — licensing, device settings or firmware — rather than with this SDK.
   - name: Report a security vulnerability
     url: https://github.com/Familis-co/node-fully-kiosk/security/advisories/new

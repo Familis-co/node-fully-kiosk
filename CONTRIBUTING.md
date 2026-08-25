@@ -79,7 +79,7 @@ Issues go through a form, so pick the one that fits:
 - **Bug report** — the SDK does not behave the way it is documented. The form asks for the entry point, a reproduction and the versions involved.
 - **Feature request** — a REST command, hook or `fully` binding the SDK does not cover yet. Linking the upstream Fully Kiosk documentation is usually enough.
 
-Questions about how to use the SDK belong in [Discussions](https://github.com/Familis-co/node-fully-kiosk/discussions), and problems with the app itself belong with [Fully Kiosk support](https://www.fully-kiosk.com/en/#support).
+Questions about how to use the SDK belong in [Discussions](https://github.com/Familis-co/node-fully-kiosk/discussions), and problems with the app itself belong with [Fully Kiosk support](https://www.fully-kiosk.com/en/#contact).
 
 ## Writing a pull request
 
