@@ -17,11 +17,11 @@
     "home-automation",
     "digital-signage"
   ],
-  "homepage": "https://github.com/familis-co/node-fully-kiosk#readme",
-  "bugs": "https://github.com/familis-co/node-fully-kiosk/issues",
+  "homepage": "https://github.com/Familis-co/node-fully-kiosk#readme",
+  "bugs": "https://github.com/Familis-co/node-fully-kiosk/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/familis-co/node-fully-kiosk.git",
+    "url": "git+https://github.com/Familis-co/node-fully-kiosk.git",
     "directory": "packages/core"
   },
   "license": "MIT",
