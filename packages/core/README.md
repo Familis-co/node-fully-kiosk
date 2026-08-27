@@ -25,7 +25,7 @@ pnpm add @familis/node-fully-kiosk
 pnpm add react
 ```
 
-Node 20.11+ or any runtime with a global `fetch`. React 18 or 19 for the hooks. ESM and CJS builds ship side by side.
+Node 22.13+ or any runtime with a global `fetch`. React 18 or 19 for the hooks. ESM and CJS builds ship side by side.
 
 ## REST client
 

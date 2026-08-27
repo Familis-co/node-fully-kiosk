@@ -10,7 +10,7 @@ Taking part means following the [Code of Conduct](.github/CODE_OF_CONDUCT.md). F
 pnpm install
 ```
 
-That installs the workspace and lets lefthook install the git hooks. Node 20.11 or later is required.
+That installs the workspace and lets lefthook install the git hooks. Node 22.13 or later and pnpm 11 or later are required; `.nvmrc` pins the Node line.
 
 ## Working on a change
 
