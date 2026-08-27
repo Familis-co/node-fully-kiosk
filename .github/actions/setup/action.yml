@@ -6,10 +6,6 @@ inputs:
     description: Node version to install. Defaults to the version pinned in .nvmrc.
     required: false
     default: ''
-  registry-url:
-    description: Registry to write into the generated npm config. Only the publishing job needs it.
-    required: false
-    default: ''
 
 runs:
   using: composite
@@ -24,7 +20,6 @@ runs:
         # so the test matrix can override .nvmrc without a second action call.
         node-version: ${{ inputs.node-version }}
         node-version-file: .nvmrc
-        registry-url: ${{ inputs.registry-url }}
         cache: pnpm
 
     - name: Install dependencies

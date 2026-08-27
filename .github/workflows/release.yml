@@ -25,7 +25,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      # Required so the registry can attach a provenance statement to the tarball.
+      # Required twice over: the OIDC token this mints is what authenticates the
+      # publish, and it is also what lets the registry attach a provenance
+      # statement to the tarball.
       id-token: write
     env:
       LEFTHOOK: '0'
@@ -40,17 +42,16 @@ jobs:
           # fallback keeps the job working without the secret.
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # No `registry-url`, and so no generated .npmrc: publishing authenticates
+      # over OIDC instead of a token, and an .npmrc carrying an empty
+      # `_authToken` would send an empty credential and pre-empt the exchange.
       - uses: ./.github/actions/setup
-        with:
-          registry-url: https://registry.npmjs.org
 
-      - name: Authenticate with npm
-        # pnpm 11 no longer trusts auth settings in a repository .npmrc, so the
-        # token goes into the user level config the way pnpm documents.
-        run: pnpm config set "//registry.npmjs.org/:_authToken" "$NPM_TOKEN"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      # Publishing is authorised by npm trusted publishing, not by a secret:
+      # the package on npmjs.com names this repository and this workflow file
+      # as its trusted publisher, and pnpm trades the job's OIDC token for a
+      # short lived registry credential. Renaming this file, or moving the
+      # publish into a called workflow, breaks that match.
       - name: Open a release pull request or publish
         uses: changesets/action@v2
         with:
@@ -68,7 +69,6 @@ jobs:
           # `changeset version` runs @changesets/changelog-github, which reads
           # GITHUB_TOKEN itself and throws outright when it is missing.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Changesets shells out to `pnpm publish` and never passes
           # --provenance, so the flag is supplied as configuration instead.
           NPM_CONFIG_PROVENANCE: 'true'
