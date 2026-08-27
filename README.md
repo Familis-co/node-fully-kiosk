@@ -1,6 +1,12 @@
 # node-fully-kiosk
 
-TypeScript SDK for [Fully Kiosk Browser](https://www.fully-kiosk.com/en), published as a single package with three entry points.
+[![npm](https://img.shields.io/npm/v/@familis/node-fully-kiosk?logo=npm&logoColor=white)](https://www.npmjs.com/package/@familis/node-fully-kiosk)
+[![CI](https://img.shields.io/github/actions/workflow/status/familis-co/node-fully-kiosk/ci.yml?branch=main&logo=github&label=CI)](https://github.com/familis-co/node-fully-kiosk/actions/workflows/ci.yml)
+[![Bundle size](https://img.shields.io/bundlejs/size/@familis/node-fully-kiosk)](https://bundlejs.com/?q=%40familis%2Fnode-fully-kiosk)
+[![Node](https://img.shields.io/node/v/@familis/node-fully-kiosk?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![License](https://img.shields.io/npm/l/@familis/node-fully-kiosk)](LICENSE)
+
+TypeScript SDK for [Fully Kiosk Browser](https://www.fully-kiosk.com/en), published to npm as [`@familis/node-fully-kiosk`](https://www.npmjs.com/package/@familis/node-fully-kiosk) — one package with three entry points.
 
 | Import                            | For                                                                                              |
 | --------------------------------- | ------------------------------------------------------------------------------------------------ |
