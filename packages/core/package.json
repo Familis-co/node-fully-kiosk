@@ -1,6 +1,6 @@
 {
   "name": "@familis/node-fully-kiosk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Typed Node.js, browser and React SDK for the Fully Kiosk Browser REST API and JavaScript interface",
   "keywords": [
     "fully-kiosk",
