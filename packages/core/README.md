@@ -1,10 +1,10 @@
 # @familis/node-fully-kiosk
 
 [![npm](https://img.shields.io/npm/v/@familis/node-fully-kiosk?logo=npm&logoColor=white)](https://www.npmjs.com/package/@familis/node-fully-kiosk)
-[![CI](https://img.shields.io/github/actions/workflow/status/familis-co/node-fully-kiosk/ci.yml?branch=main&logo=github&label=CI)](https://github.com/familis-co/node-fully-kiosk/actions/workflows/ci.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/Familis-co/node-fully-kiosk/ci.yml?branch=main&logo=github&label=CI)](https://github.com/Familis-co/node-fully-kiosk/actions/workflows/ci.yml)
 [![Bundle size](https://img.shields.io/bundlejs/size/@familis/node-fully-kiosk)](https://bundlejs.com/?q=%40familis%2Fnode-fully-kiosk)
 [![Node](https://img.shields.io/node/v/@familis/node-fully-kiosk?logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![License](https://img.shields.io/npm/l/@familis/node-fully-kiosk)](https://github.com/familis-co/node-fully-kiosk/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/@familis/node-fully-kiosk)](https://github.com/Familis-co/node-fully-kiosk/blob/main/LICENSE)
 
 Typed SDK for [Fully Kiosk Browser](https://www.fully-kiosk.com/en), with three entry points:
 
