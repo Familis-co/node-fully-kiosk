@@ -54,3 +54,21 @@ describe('FullyKioskProvider', () => {
     expect(result.current).toBeNull();
   });
 });
+
+describe('FullyKioskProvider without a client', () => {
+  it('provides no client when neither a client nor options are given', () => {
+    const { result } = renderHook(() => useOptionalFullyKioskClient(), {
+      wrapper: ({ children }) => <FullyKioskProvider>{children}</FullyKioskProvider>,
+    });
+
+    expect(result.current).toBeNull();
+  });
+
+  it('makes the required hook explain itself in that case too', () => {
+    expect(() =>
+      renderHook(() => useFullyKioskClient(), {
+        wrapper: ({ children }) => <FullyKioskProvider>{children}</FullyKioskProvider>,
+      }),
+    ).toThrow(/Wrap your tree in <FullyKioskProvider>/);
+  });
+});

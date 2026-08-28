@@ -142,3 +142,24 @@ describe('the shared bus', () => {
     expect(scope[FULLY_EVENT_BUS_KEY]).toBe(fullyEvents);
   });
 });
+
+describe('binding failures', () => {
+  it('reports a bind the device rejected without breaking the page', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    (globalThis as { fully?: unknown }).fully = {
+      bind: () => {
+        throw new Error('bind not supported');
+      },
+    };
+
+    try {
+      const bus = new FullyEventBus();
+
+      expect(() => bus.on('onMotion', () => undefined)).not.toThrow();
+      expect(consoleError).toHaveBeenCalled();
+    } finally {
+      consoleError.mockRestore();
+      delete (globalThis as { fully?: unknown }).fully;
+    }
+  });
+});

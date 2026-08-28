@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { FullyKioskClient } from './client.js';
+import { createFullyKioskClient, FullyKioskClient } from './client.js';
 import type { FetchLike } from './types/options.js';
 
 /**
@@ -122,5 +122,120 @@ describe('FullyKioskClient', () => {
     });
 
     await expect(failing.ping()).resolves.toBe(false);
+  });
+});
+
+describe('FullyKioskClient escape hatches', () => {
+  it('returns the raw bytes and MIME type for a binary command', async () => {
+    const binaryClient = new FullyKioskClient({
+      host: '10.0.0.5',
+      password: 'pw',
+      fetch: () =>
+        Promise.resolve(
+          new Response(new Uint8Array([1, 2, 3]), { headers: { 'content-type': 'image/png' } }),
+        ),
+    });
+
+    const response = await binaryClient.commandBinary('getScreenshot', { format: 'png' });
+
+    expect(response.contentType).toBe('image/png');
+    expect(Array.from(response.data)).toEqual([1, 2, 3]);
+  });
+
+  it('reports a device that answers as pingable', async () => {
+    const { client: reachable } = createClient();
+
+    await expect(reachable.ping()).resolves.toBe(true);
+  });
+
+  it('does not retry the ping by default', async () => {
+    const fetchImpl = vi.fn<FetchLike>(() => Promise.reject(new Error('down')));
+    const failing = new FullyKioskClient({ host: 'h', password: 'pw', fetch: fetchImpl });
+
+    await expect(failing.ping()).resolves.toBe(false);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it('builds the same client through the factory', () => {
+    const built = createFullyKioskClient({
+      host: '10.0.0.5',
+      password: 'pw',
+      fetch: () =>
+        Promise.resolve(
+          new Response('{"status":"OK"}', { headers: { 'content-type': 'application/json' } }),
+        ),
+    });
+
+    expect(built).toBeInstanceOf(FullyKioskClient);
+    expect(built.baseUrl).toBe('http://10.0.0.5:2323/');
+  });
+});
+
+describe('SettingsCommands.get', () => {
+  it('picks one key out of the settings map', async () => {
+    const settingsClient = new FullyKioskClient({
+      host: '10.0.0.5',
+      password: 'pw',
+      fetch: () =>
+        Promise.resolve(
+          new Response('{"screenBrightness":"128","motionDetection":true}', {
+            headers: { 'content-type': 'application/json' },
+          }),
+        ),
+    });
+
+    await expect(settingsClient.settings.get('screenBrightness')).resolves.toBe('128');
+    await expect(settingsClient.settings.get('motionDetection')).resolves.toBe(true);
+  });
+
+  it('is undefined for a key the device does not report', async () => {
+    const settingsClient = new FullyKioskClient({
+      host: '10.0.0.5',
+      password: 'pw',
+      fetch: () =>
+        Promise.resolve(new Response('{}', { headers: { 'content-type': 'application/json' } })),
+    });
+
+    await expect(settingsClient.settings.get('startURL')).resolves.toBeUndefined();
+  });
+});
+
+describe('optional command parameters', () => {
+  let client: FullyKioskClient;
+  let urls: string[];
+
+  beforeEach(() => {
+    ({ client, urls } = createClient());
+  });
+
+  it('omits the speech options that were not given', async () => {
+    await client.speech.say('Hello');
+
+    const query = params(urls[0]);
+    expect(query.get('text')).toBe('Hello');
+    expect(query.get('locale')).toBeNull();
+    expect(query.get('engine')).toBeNull();
+    expect(query.get('queue')).toBeNull();
+  });
+
+  it('sends queue=0 when queueing was explicitly declined', async () => {
+    await client.speech.say('Hello', { queue: false });
+
+    expect(params(urls[0]).get('queue')).toBe('0');
+  });
+
+  it('encodes every playVideo option as 0 or 1', async () => {
+    await client.media.playVideo('https://example.test/clip.mp4', {
+      loop: true,
+      showControls: true,
+      exitOnTouch: true,
+      exitOnCompletion: false,
+    });
+
+    const query = params(urls[0]);
+    expect(query.get('loop')).toBe('1');
+    expect(query.get('showControls')).toBe('1');
+    expect(query.get('exitOnTouch')).toBe('1');
+    expect(query.get('exitOnCompletion')).toBe('0');
   });
 });
