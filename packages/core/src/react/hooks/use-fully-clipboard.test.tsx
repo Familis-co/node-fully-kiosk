@@ -78,4 +78,12 @@ describe('useFullyClipboard', () => {
     expect(() => act(() => result.current.write('x'))).not.toThrow();
     expect(() => act(() => result.current.read())).not.toThrow();
   });
+
+  it('does not report a value for a write that reached no device', () => {
+    const { result } = renderHook(() => useFullyClipboard());
+
+    act(() => result.current.write('never copied'));
+
+    expect(result.current.value).toBe('');
+  });
 });
