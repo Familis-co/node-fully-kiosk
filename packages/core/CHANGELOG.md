@@ -1,5 +1,16 @@
 # @familis/node-fully-kiosk
 
+## 0.1.2
+
+### Patch Changes
+
+- [#24](https://github.com/Familis-co/node-fully-kiosk/pull/24) [`a781350`](https://github.com/Familis-co/node-fully-kiosk/commit/a7813507d4c9f8ec24dcd3d77bb07bd6a7c21b34) Thanks [@glazk0](https://github.com/glazk0)! - Stop `useFullyClipboard` reporting a value for a write that reached no device
+  
+  `write` set the hook's `value` whether or not the Fully Kiosk JavaScript
+  interface was there to receive the text. Outside Fully Kiosk nothing was
+  copied, yet a UI rendering `value` as confirmation would show a successful
+  copy. It now writes state only once the interface has accepted the text.
+
 ## 0.1.1
 
 ### Patch Changes
