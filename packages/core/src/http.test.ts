@@ -224,3 +224,158 @@ describe('FullyKioskTransport failure handling', () => {
     expect(seen[0]).not.toContain('secret');
   });
 });
+
+describe('FullyKioskTransport construction', () => {
+  it('refuses to build without a password', () => {
+    expect(() => new FullyKioskTransport({ host: '10.0.0.5' } as never)).toThrow(TypeError);
+  });
+
+  it('refuses a password that is not a string', () => {
+    expect(() => new FullyKioskTransport({ host: '10.0.0.5', password: 1234 } as never)).toThrow(
+      /`password` is required/,
+    );
+  });
+
+  it('accepts an empty password, which the device may well be configured with', () => {
+    expect(
+      () => new FullyKioskTransport({ host: '10.0.0.5', password: '', fetch: stubFetch('{}') }),
+    ).not.toThrow();
+  });
+
+  it('explains itself when there is no fetch to use', () => {
+    const original = globalThis.fetch;
+    // @ts-expect-error deliberately removing fetch to reach the guard
+    delete globalThis.fetch;
+
+    try {
+      expect(() => new FullyKioskTransport({ host: '10.0.0.5', password: 'pw' })).toThrow(
+        /No global `fetch` available/,
+      );
+    } finally {
+      globalThis.fetch = original;
+    }
+  });
+});
+
+describe('FullyKioskTransport abort handling', () => {
+  it('lets an abort from user code through instead of reporting the device unreachable', async () => {
+    const controller = new AbortController();
+    const transport = new FullyKioskTransport({
+      host: '10.0.0.5',
+      password: 'pw',
+      retries: 0,
+      fetch: (_url, init) =>
+        new Promise((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(new Error('aborted')));
+        }),
+    });
+
+    const pending = transport.json('getDeviceInfo', {}, { signal: controller.signal });
+    controller.abort();
+
+    await expect(pending).rejects.not.toBeInstanceOf(FullyKioskConnectionError);
+  });
+
+  it('forwards the caller abort onto the request it issued', async () => {
+    const controller = new AbortController();
+    let issued: AbortSignal | undefined;
+
+    const transport = new FullyKioskTransport({
+      host: '10.0.0.5',
+      password: 'pw',
+      retries: 0,
+      fetch: (_url, init) => {
+        issued = init?.signal ?? undefined;
+        return new Promise((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(new Error('aborted')));
+        });
+      },
+    });
+
+    const pending = transport.json('getDeviceInfo', {}, { signal: controller.signal });
+    expect(issued?.aborted).toBe(false);
+
+    controller.abort();
+    await expect(pending).rejects.toThrow();
+
+    expect(issued?.aborted).toBe(true);
+  });
+});
+
+describe('FullyKioskTransport binary responses', () => {
+  it('treats the HTML login page as an authentication failure', async () => {
+    const transport = new FullyKioskTransport({
+      host: '10.0.0.5',
+      password: 'pw',
+      retries: 0,
+      fetch: vi.fn<FetchLike>(() =>
+        Promise.resolve(
+          new Response('<html>login</html>', { headers: { 'content-type': 'text/html' } }),
+        ),
+      ),
+    });
+
+    await expect(transport.binary('getScreenshot')).rejects.toBeInstanceOf(FullyKioskAuthError);
+  });
+
+  it('falls back to a generic MIME type when the device reports none', async () => {
+    const transport = new FullyKioskTransport({
+      host: '10.0.0.5',
+      password: 'pw',
+      fetch: vi.fn<FetchLike>(() =>
+        Promise.resolve(new Response(new Uint8Array([1, 2, 3]), { headers: {} })),
+      ),
+    });
+
+    const response = await transport.binary('getScreenshot');
+
+    expect(response.contentType).toBe('application/octet-stream');
+    expect(Array.from(response.data)).toEqual([1, 2, 3]);
+  });
+});
+
+describe('FullyKioskTransport host handling', () => {
+  it('refuses an empty host', () => {
+    expect(
+      () => new FullyKioskTransport({ host: '', password: 'pw', fetch: stubFetch('{}') }),
+    ).toThrow(/`host` is required/);
+  });
+
+  it('refuses a host that is only whitespace', () => {
+    expect(
+      () => new FullyKioskTransport({ host: '   ', password: 'pw', fetch: stubFetch('{}') }),
+    ).toThrow(TypeError);
+  });
+
+  it('trims a padded host', () => {
+    const transport = new FullyKioskTransport({
+      host: '  10.0.0.5  ',
+      password: 'pw',
+      fetch: stubFetch('{}'),
+    });
+
+    expect(transport.baseUrl.toString()).toBe('http://10.0.0.5:2323/');
+  });
+
+  it('honours an explicit protocol', () => {
+    const transport = new FullyKioskTransport({
+      host: '10.0.0.5',
+      password: 'pw',
+      protocol: 'https',
+      fetch: stubFetch('{}'),
+    });
+
+    expect(transport.baseUrl.protocol).toBe('https:');
+  });
+
+  it('lets an explicit port win over the one carried by the host', () => {
+    const transport = new FullyKioskTransport({
+      host: 'http://10.0.0.5:8080',
+      password: 'pw',
+      port: 2323,
+      fetch: stubFetch('{}'),
+    });
+
+    expect(transport.baseUrl.port).toBe('2323');
+  });
+});

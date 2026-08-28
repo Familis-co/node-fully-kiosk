@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
  * Clipboard access through the JavaScript interface.
  */
 export interface UseFullyClipboardResult {
-  /** The value read by the most recent {@link read} or {@link readHtml} call. */
+  /** The most recent value read from, or written to, the clipboard. */
   value: string;
   /**
    * Reads the clipboard as plain text.
@@ -50,7 +50,10 @@ export function useFullyClipboard(): UseFullyClipboardResult {
   }, []);
 
   const write = useCallback((text: string) => {
-    getFully()?.copyTextToClipboard(text);
+    const fully = getFully();
+    if (!fully) return;
+
+    fully.copyTextToClipboard(text);
     setValue(text);
   }, []);
 
