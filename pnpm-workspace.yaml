@@ -8,16 +8,16 @@ allowBuilds:
 # Shared dependency versions. Packages reference these with `catalog:` so every
 # workspace package builds and tests against the exact same toolchain.
 catalog:
-  '@types/node': ^26.2.0
+  '@types/node': ^26.4.1
   '@types/react': ^19.2.0
-  '@types/react-dom': ^19.2.0
-  '@testing-library/react': ^16.3.0
+  '@types/react-dom': ^19.2.5
+  '@testing-library/react': ^16.3.3
   '@vitest/coverage-v8': ^4.1.11
-  happy-dom: ^20.11.2
+  happy-dom: ^20.12.2
   react: ^19.2.0
   react-dom: ^19.2.0
   tsup: ^8.5.0
-  typescript: ^6.0.3
+  typescript: ^7.0.2
   vitest: ^4.1.11
 
 linkWorkspacePackages: true
