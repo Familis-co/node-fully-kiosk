@@ -12,6 +12,16 @@ updates:
       # one of them lands.
       dependencies:
         patterns: ['*']
+    ignore:
+      # TypeScript 7 breaks two parts of the toolchain at once. tsup 8.5.1
+      # bundles rollup-plugin-dts 6.1.1, whose use of the compiler API throws
+      # "Cannot read properties of undefined (reading
+      # 'useCaseSensitiveFileNames')", and typescript-eslint 8.x declares a peer
+      # range of >=4.8.4 <6.1.0. tsup 8.5.1 is the latest release and an
+      # override cannot reach a bundled dependency, so the toolchain stays on
+      # TypeScript 6 until both ship support.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
     commit-message:
       prefix: chore
       include: scope
