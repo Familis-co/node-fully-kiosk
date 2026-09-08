@@ -10,15 +10,15 @@ allowBuilds:
 catalog:
   '@types/node': ^26.4.1
   '@types/react': ^19.2.0
-  '@types/react-dom': ^19.2.5
+  '@types/react-dom': ^19.2.7
   '@testing-library/react': ^16.3.3
-  '@vitest/coverage-v8': ^4.1.11
-  happy-dom: ^20.12.2
+  '@vitest/coverage-v8': ^5.0.0
+  happy-dom: ^20.14.0
   react: ^19.2.0
   react-dom: ^19.2.0
   tsup: ^8.5.0
   typescript: ^6.0.3
-  vitest: ^4.1.11
+  vitest: ^5.0.0
 
 linkWorkspacePackages: true
 savePrefix: ^
