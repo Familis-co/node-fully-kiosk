@@ -32,7 +32,7 @@ jobs:
     env:
       LEFTHOOK: '0'
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Changesets compares against the full history to decide what to release.
           fetch-depth: 0
@@ -53,7 +53,7 @@ jobs:
       # short lived registry credential. Renaming this file, or moving the
       # publish into a called workflow, breaks that match.
       - name: Open a release pull request or publish
-        uses: changesets/action@v2
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           # v2 renamed every input this step uses: `version`, `publish`,
           # `commit` and `title` no longer exist under those names.

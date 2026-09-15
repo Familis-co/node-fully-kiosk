@@ -10,7 +10,7 @@ Taking part means following the [Code of Conduct](.github/CODE_OF_CONDUCT.md). F
 pnpm install
 ```
 
-That installs the workspace and lets lefthook install the git hooks. Node 22.13 or later and pnpm 11 or later are required; `.nvmrc` pins the Node line.
+That installs the workspace and lets Lefthook install the git hooks. Node 22.13 or later and pnpm 11 or later are required; `.nvmrc` pins the Node line.
 
 ## Working on a change
 
@@ -26,6 +26,7 @@ While you work:
 
 ```bash
 pnpm dev           # rebuild on change
+pnpm deps:update   # update dependency ranges and reinstall the workspace
 pnpm test:watch    # vitest in watch mode
 ```
 
@@ -33,12 +34,13 @@ Before opening a pull request:
 
 ```bash
 pnpm lint
+pnpm format:check
 pnpm typecheck
 pnpm test
 pnpm build
 ```
 
-The pre-commit hook runs lint-staged over the staged files, and the pre-push hook runs the typecheck and the tests, so most of this happens for you.
+The pre-commit hook runs Oxlint and Oxfmt over the staged files, and the pre-push hook runs the typecheck and the tests, so most of this happens for you.
 
 ## Commit messages
 

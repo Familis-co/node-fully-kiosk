@@ -129,7 +129,7 @@ export function useFullyQuery<T>(
     if (!refetchInterval || refetchInterval <= 0) return;
     const timer = setInterval(() => void run(), refetchInterval);
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react/exhaustive-deps
   }, [enabled, refetchInterval, run, ...deps]);
 
   return { data, error, isLoading, isFetching, updatedAt, refetch: run };

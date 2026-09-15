@@ -51,7 +51,7 @@ export function FullyKioskProvider({
     const current = optionsRef.current;
     if (!current) return null;
     return new FullyKioskClient(current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react/exhaustive-deps
   }, [client, host, password, port, protocol, timeout, retries, requestStyle]);
 
   return createElement(FullyKioskContext.Provider, { value }, children);

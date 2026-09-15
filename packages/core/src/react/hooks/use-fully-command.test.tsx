@@ -79,7 +79,7 @@ describe('useFullyCommand', () => {
   it('wraps a non-Error rejection', async () => {
     const { result } = renderHook(() =>
       // The point of this case is a rejection that is not an Error.
-      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+      // oxlint-disable-next-line typescript/prefer-promise-reject-errors
       useFullyCommand(() => Promise.reject('just a string')),
     );
 

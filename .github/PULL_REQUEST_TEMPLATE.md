@@ -26,7 +26,7 @@ say which Fully Kiosk version and which Android version you tested against.
 
 - [ ] The branch is cut from `main` and carries one logical change
 - [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/)
-- [ ] `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` pass
+- [ ] `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` pass
 - [ ] Every new exported function, method and hook carries TSDoc
 - [ ] A changeset is included (`pnpm changeset`), or the change does not alter published behaviour
 - [ ] Breaking changes are called out below

@@ -2,10 +2,14 @@
 # through the root `prepare` script.
 
 pre-commit:
-  parallel: true
   jobs:
-    - name: lint-staged
-      run: pnpm exec lint-staged --concurrent false
+    - name: oxlint
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'
+      run: pnpm exec oxlint --fix --deny-warnings --report-unused-disable-directives --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    - name: oxfmt
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,md,mdx,yml,yaml}'
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
 pre-push:

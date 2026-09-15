@@ -115,14 +115,15 @@ A pnpm workspace with one published package today, so example apps and future pa
 ```bash
 pnpm install       # installs the workspace and wires up the git hooks
 pnpm build         # tsup, ESM + CJS + declarations for all three entry points
+pnpm deps:update   # update dependency ranges with taze, then refresh the lockfile
 pnpm test          # vitest
 pnpm typecheck     # tsc --noEmit
-pnpm lint          # eslint, flat config
-pnpm format        # prettier
+pnpm lint          # oxlint, including type-aware TypeScript rules
+pnpm format        # oxfmt
 pnpm changeset     # record a change for the next release
 ```
 
-Commits follow [Conventional Commits](https://www.conventionalcommits.org/); lefthook enforces the format and runs lint-staged before each commit, plus typecheck and tests before a push. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Commits follow [Conventional Commits](https://www.conventionalcommits.org/); Lefthook runs Oxlint and Oxfmt on staged files before each commit, then typecheck and tests before a push. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
