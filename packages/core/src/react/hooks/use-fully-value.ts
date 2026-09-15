@@ -62,7 +62,7 @@ export function useFullyValue<T>(
     setValue(next);
     setAvailable(isFullyKiosk());
     return next;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export function useFullyValue<T>(
 
     const timer = setInterval(refresh, interval);
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react/exhaustive-deps
   }, [enabled, interval, refresh, ...deps]);
 
   return { value, available, refresh };

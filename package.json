@@ -1,54 +1,42 @@
 {
-  "name": "node-fully-kiosk-monorepo",
+  "name": "node-fully-kiosk",
   "version": "0.0.0",
   "private": true,
   "description": "Fully Kiosk Browser TypeScript SDK and its React bindings",
   "license": "MIT",
   "type": "module",
-  "packageManager": "pnpm@11.22.0",
+  "packageManager": "pnpm@11.27.0",
   "engines": {
     "node": ">=22.13.0",
     "pnpm": ">=11"
   },
   "scripts": {
     "build": "pnpm -r --filter \"./packages/*\" run build",
-    "dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
-    "test": "pnpm -r --filter \"./packages/*\" run test",
-    "test:watch": "pnpm -r --parallel --filter \"./packages/*\" run test:watch",
-    "test:coverage": "pnpm -r --filter \"./packages/*\" run test:coverage",
-    "typecheck": "pnpm -r --filter \"./packages/*\" run typecheck",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "clean": "pnpm -r --filter \"./packages/*\" run clean && rm -rf node_modules",
     "changeset": "changeset",
-    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "clean": "pnpm -r --filter \"./packages/*\" run clean && rm -rf node_modules",
+    "deps:update": "taze -r -w -i",
+    "dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint --deny-warnings --report-unused-disable-directives",
+    "lint:fix": "oxlint --fix --deny-warnings --report-unused-disable-directives",
+    "prepare": "lefthook install",
     "release": "pnpm build && changeset publish",
-    "prepare": "lefthook install"
+    "test": "pnpm -r --filter \"./packages/*\" run test",
+    "test:coverage": "pnpm -r --filter \"./packages/*\" run test:coverage",
+    "test:watch": "pnpm -r --parallel --filter \"./packages/*\" run test:watch",
+    "typecheck": "pnpm -r --filter \"./packages/*\" run typecheck",
+    "version-packages": "changeset version && pnpm install --lockfile-only"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
-    "@changesets/cli": "^3.0.2",
-    "@eslint/js": "^10.0.1",
+    "@changesets/cli": "^3.0.3",
     "@types/node": "catalog:",
-    "eslint": "^10.10.0",
-    "eslint-config-prettier": "^10.1.0",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "globals": "^17.12.0",
-    "lefthook": "^2.1.12",
-    "lint-staged": "^17.5.0",
-    "prettier": "^3.6.0",
-    "typescript": "catalog:",
-    "typescript-eslint": "^8.69.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,mjs,cjs}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ],
-    "*.{json,md,yml,yaml}": [
-      "prettier --write"
-    ]
+    "lefthook": "^2.1.14",
+    "oxfmt": "^0.68.0",
+    "oxlint": "^1.83.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "taze": "^21.1.0",
+    "typescript": "catalog:"
   }
 }
