@@ -32,11 +32,11 @@
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
     "@types/node": "catalog:",
-    "lefthook": "^2.1.14",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "taze": "^21.1.0",
+    "lefthook": "^2.1.15",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "taze": "^21.2.0",
     "typescript": "catalog:"
   }
 }
